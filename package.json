@@ -2,7 +2,7 @@
   "name": "kuraue-db",
   "version": "0.0.1",
   "description": "Yama no Susume DB for mountains the characters climbed",
-  "productName": "Kuraue DB",
+  "productName": "KuraueDB",
   "author": "bocchiyeo <hweehngyeo@yahoo.com.sg>",
   "type": "module",
   "private": true,
