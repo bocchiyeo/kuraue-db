@@ -5,19 +5,11 @@
 
       <div class="text-h2" style="opacity: 0.4">Oops. Nothing here...</div>
 
-      <q-btn
-        class="q-mt-xl"
-        color="white"
-        text-color="blue"
-        unelevated
-        to="/"
-        label="Go Home"
-        no-caps
-      />
+      <ActionButton class="q-mt-xl" label="Go Home" to="/" variant="secondary" />
     </div>
   </div>
 </template>
 
 <script setup>
-//
+import ActionButton from '../components/ActionButton.vue'
 </script>

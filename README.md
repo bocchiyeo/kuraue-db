@@ -1,4 +1,4 @@
-# Kuraue DB (kuraue-db)
+# KuraueDB (kuraue-db)
 
 Yama no Susume DB for mountains the characters climbed
 

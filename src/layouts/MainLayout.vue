@@ -1,36 +1,87 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header>
-      <q-toolbar class="bg-primary text-grey-9 q-px-sm-xl">
-        <q-btn flat no-caps class="q-pt-none q-pb-none">
+    <q-header elevated class="bg-surface shadow-2">
+      <q-toolbar class="q-px-md q-py-sm">
+        <ActionButton variant="nav" to="/" class="brand-button q-pt-none q-pb-none">
           <div class="row items-center no-wrap">
-            <q-img 
+            <q-img
               src="https://www.yamanosusume.com/img/character/hinata/thum_hinata_01.jpg"
-              style="width: 5em; height: 4.5em;"
+              style="width: 3.2rem; height: 3.2rem; border-radius: 50%;"
               fit="cover"
               no-spinner
               fetchpriority="high"
             />
-            <q-toolbar-title shrink class="q-ml-sm gt-sm">
+            <q-toolbar-title shrink class="q-ml-sm brand-title">
               KuraueDB
             </q-toolbar-title>
           </div>
-        </q-btn>
+        </ActionButton>
+
         <q-space />
-        <q-btn flat no-caps>About</q-btn>
-        <q-btn flat no-caps>Mountains</q-btn>
-        <q-btn flat no-caps>Characters</q-btn>
+
+        <ActionButton variant="nav" label="Home" to="/" />
+        <ActionButton variant="nav" label="Mountains" to="/mountains" />
       </q-toolbar>
     </q-header>
 
-  <q-page-container>
-    <router-view />
-  </q-page-container>
-</q-layout>
-
+    <q-page-container class="page-shell">
+      <router-view v-slot="{ Component }">
+        <transition name="page-fade" mode="out-in">
+          <component :is="Component" :key="$route.fullPath" />
+        </transition>
+      </router-view>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router'
+import ActionButton from '../components/ActionButton.vue'
 
-
+const $route = useRoute()
 </script>
+
+<style scoped>
+.bg-surface {
+  background: rgba(16, 20, 24, 0.94);
+  backdrop-filter: blur(12px);
+}
+
+.brand-button {
+  color: #f5f7ff !important;
+  padding-inline: 0.4rem;
+}
+
+.brand-title {
+  color: #f5f7ff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.q-toolbar {
+  min-height: 72px;
+}
+
+.page-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.page-fade-enter-from,
+.page-fade-leave-to {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.page-fade-enter-to,
+.page-fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
