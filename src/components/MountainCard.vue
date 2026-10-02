@@ -1,22 +1,30 @@
 <template>
   <router-link :to="linkTo" class="card-link">
-    <q-card
-      flat
-      class="mountain-card"
-      :style="{
-        backgroundImage: `linear-gradient(180deg, rgba(7, 10, 14, 0.2), rgba(7, 10, 14, 0.78)), url(${mountain.image})`,
-      }"
-    >
+    <article class="mountain-card">
+      <div class="card-image">
+        <img class="card-photo" :src="mountain.image" :alt="`${mountain.name} mountain landscape`" />
+        <div class="image-scrim" aria-hidden="true" />
+        <span class="region-tag">{{ mountain.region }}</span>
+        <span class="elevation-tag">{{ mountain.elevation }}</span>
+      </div>
+
       <div class="card-content">
-        <div class="meta-row" v-if="mountain.region || mountain.bestSeason">
-          <span class="tag" v-if="mountain.region">{{ mountain.region }}</span>
-          <span class="tag muted" v-if="mountain.bestSeason">{{ mountain.bestSeason }}</span>
+        <div class="title-row">
+          <div>
+            <h2>{{ mountain.name }}</h2>
+            <p class="japanese-name">{{ mountain.japaneseName }}</p>
+          </div>
+          <q-icon name="north_east" size="20px" class="card-arrow" aria-hidden="true" />
         </div>
 
-        <h2>{{ mountain.name }}</h2>
-        <p>{{ mountain.summary }}</p>
+        <p class="summary">{{ mountain.summary }}</p>
+
+        <div class="card-footer">
+          <span class="difficulty">{{ mountain.difficulty }}</span>
+          <span class="episodes" :title="mountain.episodes">{{ mountain.episodes }}</span>
+        </div>
       </div>
-    </q-card>
+    </article>
   </router-link>
 </template>
 
@@ -36,77 +44,174 @@ defineProps({
 <style scoped>
 .card-link {
   display: block;
-  text-decoration: none;
+  min-width: 0;
   color: inherit;
-  transition: transform 0.25s ease, filter 0.25s ease;
-}
-
-.card-link:hover,
-.card-link:focus-visible {
-  transform: translateY(-8px);
-  filter: saturate(1.05);
+  text-decoration: none;
 }
 
 .mountain-card {
-  min-height: 420px;
+  height: 100%;
   overflow: hidden;
-  border-radius: 24px;
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 24px 60px rgba(17, 22, 28, 0.18);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(40, 79, 59, 0.1);
+  border-radius: 22px;
+  background: #fbfaf7;
+  box-shadow: 0 12px 34px rgba(35, 56, 42, 0.07);
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    border-color 0.24s ease;
 }
 
 .card-link:hover .mountain-card,
 .card-link:focus-visible .mountain-card {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 32px 70px rgba(17, 22, 28, 0.22);
+  transform: translateY(-5px);
+  border-color: rgba(40, 79, 59, 0.24);
+  box-shadow: 0 20px 42px rgba(35, 56, 42, 0.13);
+}
+
+.card-link:focus-visible {
+  outline: 3px solid #63876d;
+  outline-offset: 4px;
+  border-radius: 24px;
+}
+
+.card-image {
+  position: relative;
+  height: 218px;
+  overflow: hidden;
+  background: #d4ddd3;
+}
+
+.card-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.image-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(17, 31, 22, 0.18), transparent 38%, rgba(17, 31, 22, 0.24));
+  pointer-events: none;
+}
+
+.region-tag,
+.elevation-tag {
+  position: absolute;
+  z-index: 1;
+  top: 14px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 999px;
+  background: rgba(27, 48, 35, 0.45);
+  color: #fff;
+  font-size: 0.67rem;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+}
+
+.region-tag {
+  left: 14px;
+}
+
+.elevation-tag {
+  right: 14px;
 }
 
 .card-content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  min-height: 420px;
-  padding: 24px;
-  background: linear-gradient(180deg, rgba(10, 13, 18, 0.08), rgba(10, 13, 18, 0.9));
-  color: #fff;
+  min-height: 214px;
+  padding: 19px 20px 17px;
 }
 
-.meta-row {
+.title-row {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.35rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.tag.muted {
-  background: rgba(27, 73, 52, 0.36);
-}
-
-.card-content h2 {
+.title-row h2 {
   margin: 0;
-  font-size: 2rem;
-  line-height: 1.1;
-  font-weight: 800;
+  color: #284f3b;
+  font-size: 1.32rem;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 750;
 }
 
-.card-content p {
-  margin: 0.8rem 0 0;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.7;
-  min-height: 72px;
+.japanese-name {
+  margin: 4px 0 0;
+  color: #88928a;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.card-arrow {
+  flex: 0 0 auto;
+  color: #66816d;
+  transition: transform 0.2s ease;
+}
+
+.card-link:hover .card-arrow,
+.card-link:focus-visible .card-arrow {
+  transform: translate(2px, -2px);
+}
+
+.summary {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 13px 0 17px;
+  color: #647168;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(40, 79, 59, 0.11);
+}
+
+.difficulty {
+  flex: 0 0 auto;
+  color: #54735c;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.episodes {
+  overflow: hidden;
+  color: #929b93;
+  font-size: 0.68rem;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .card-image {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mountain-card,
+  .card-arrow {
+    transition: none;
+  }
 }
 </style>

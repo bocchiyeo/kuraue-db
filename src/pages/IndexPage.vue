@@ -1,56 +1,32 @@
 <template>
-  <q-page class="no-padding home-page">
-    <q-img
-      src="https://images.alphacoders.com/761/761908.jpg"
-      class="window-height hero-image"
-    >
-      <div class="absolute-full bg-overlay" />
-
-      <div class="absolute-full hero-content text-white text-center">
-        <div class="hero-copy">
-          <p class="eyebrow">Yama no Susume archive</p>
-          <h1 class="text-h2 text-weight-bold q-mb-md">KuraueDB</h1>
-
-          <p class="text-subtitle1 q-mb-lg hero-subtitle">
-            Explore the mountains of Yama no Susume
-          </p>
-
-          <div class="cta-row">
-            <ActionButton label="Explore Mountains" to="/mountains" class="q-mr-md" />
-            <ActionButton label="View Characters" variant="secondary" @click="scrollToSection('characters')" />
-          </div>
-        </div>
-
-        <q-icon
-          name="keyboard_arrow_down"
-          size="36px"
-          class="scroll-indicator"
-          @click="scrollToSection('about')"
-        />
-      </div>
-    </q-img>
-
-    <section id="about" class="section about-section text-grey-9">
-      <div class="row justify-center">
-        <div class="col-12 col-md-8 text-center">
-          <p class="eyebrow dark">What is KuraueDB?</p>
-          <h2 class="text-h4 text-weight-bold q-mb-md">A mountain journal for the fandom</h2>
-
-          <p class="text-body1 q-mb-lg about-copy">
-            KuraueDB is a fan-made Vue project that archives the mountains featured in Yama no Susume.
-            It brings together scenic notes, route highlights, and visual storytelling in a clean,
-            readable format meant for curious hikers and anime fans alike.
-          </p>
-
-          <ActionButton label="Browse Peaks" to="/mountains" />
+  <q-page class="home-page">
+    <section class="hero" aria-labelledby="home-title">
+      <div class="hero-content">
+        <p class="eyebrow"><q-icon name="landscape" size="16px" /> Yama no Susume</p>
+        <h1 id="home-title">Welcome to<br />KuraueDB</h1>
+        <p class="hero-description">
+          Discover the mountains Hinata and her friends climbed
+        </p>
+        <div class="hero-actions">
+          <router-link class="hero-link hero-link-primary" to="/mountains">
+            Browse the archive
+            <q-icon name="north_east" size="17px" />
+          </router-link>
+          <router-link class="hero-link" :to="{ path: '/', hash: '#featured-mountains' }">
+            Find your first trail
+            <q-icon name="south" size="17px" />
+          </router-link>
         </div>
       </div>
+      <p class="hero-caption">A fan-made mountain guide</p>
     </section>
 
-    <section id="mountains" class="section mountains-section text-grey-9">
-      <div class="section-header text-center">
-        <p class="eyebrow dark">Featured mountains</p>
-        <h2 class="text-h4 text-weight-bold q-mb-lg">Climbs worth returning to</h2>
+    <section id="featured-mountains" class="featured-section" aria-labelledby="featured-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow dark">The archive · {{ mountains.length }} mountains</p>
+          <h2 id="featured-title">A few places to begin</h2>
+        </div>
       </div>
 
       <div class="mountains-grid">
@@ -61,172 +37,262 @@
           :link-to="`/mountains/${mountain.slug}`"
         />
       </div>
-    </section>
 
-    <section id="characters" class="section characters-section text-grey-9">
-      <div class="section-header text-center">
-        <p class="eyebrow dark">Cast</p>
-        <h2 class="text-h4 text-weight-bold q-mb-lg">Mountain companions</h2>
-      </div>
-
-      <div class="characters-grid">
-        <CharacterCard
-          v-for="character in characters"
-          :key="character.name"
-          :character="character"
-          link-to="/mountains"
-        />
+      <div class="archive-cta">
+        <p>Want to see more? Explore all {{ mountains.length }} mountains in the archive.</p>
+        <router-link class="archive-button" to="/mountains">
+          Browse all mountains
+          <q-icon name="north_east" size="17px" />
+        </router-link>
       </div>
     </section>
   </q-page>
 </template>
 
-<style scoped>
-.hero-image {
-  min-height: 100vh;
-}
-
-.bg-overlay {
-  background: rgba(8, 11, 16, 0.44);
-}
-
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-top: 20vh;
-}
-
-.hero-copy {
-  max-width: 760px;
-  padding: 0 20px;
-}
-
-.eyebrow {
-  margin: 0 0 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-size: 0.74rem;
-  opacity: 0.82;
-}
-
-.eyebrow.dark {
-  color: #4b5d68;
-}
-
-.hero-subtitle {
-  max-width: 520px;
-  margin: 0 auto 1.5rem;
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.cta-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.scroll-indicator {
-  margin-top: 3rem;
-  cursor: pointer;
-  opacity: 0.9;
-}
-
-.section {
-  padding: 88px 20px;
-}
-
-.about-section {
-  background: #f7f3ee;
-}
-
-.about-copy {
-  max-width: 760px;
-  margin: 0 auto 1.5rem;
-  line-height: 1.8;
-  color: #44515d;
-}
-
-.mountains-section {
-  background: linear-gradient(180deg, #f4efe8 0%, #eef2ef 100%);
-}
-
-.section-header {
-  margin-bottom: 32px;
-}
-
-.mountains-grid,
-.characters-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  gap: 24px;
-}
-
-.mountains-grid {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
-
-.characters-section {
-  background: #f4f9f5;
-}
-
-.characters-grid {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-
-@media (max-width: 680px) {
-  .hero-content {
-    padding-top: 18vh;
-  }
-
-  .cta-row {
-    flex-direction: column;
-  }
-
-  .section {
-    padding: 72px 16px;
-  }
-}
-</style>
-
 <script setup>
-import ActionButton from '../components/ActionButton.vue'
-import CharacterCard from '../components/CharacterCard.vue'
 import MountainCard from '../components/MountainCard.vue'
 import mountains from '../data/mountains'
 
 const featuredMountains = mountains.slice(0, 3)
+</script>
 
-const characters = [
-  {
-    name: 'Hinata',
-    role: 'Trail scout',
-    image: 'https://www.yamanosusume.com/img/character/hinata/thum_hinata_01.jpg',
-    bio: 'Constantly planning the next scenic route and looking for the best view points.',
-  },
-  {
-    name: 'Aoi',
-    role: 'Camp planner',
-    image: 'https://www.yamanosusume.com/img/character/aoi/thum_aoi_01.jpg',
-    bio: 'Keeps the group organized and always ready with warm drinks and snacks.',
-  },
-  {
-    name: 'Yui',
-    role: 'Nature lover',
-    image: 'https://www.yamanosusume.com/img/character/yui/thum_yui_01.jpg',
-    bio: 'Observes the smallest details of wildflowers, clouds, and mountain light.',
-  },
-]
+<style scoped>
+.hero {
+  position: relative;
+  display: flex;
+  min-height: clamp(560px, calc(100svh - 72px), 820px);
+  align-items: center;
+  overflow: hidden;
+  padding: 80px max(7vw, calc((100vw - 1200px) / 2));
+  background-color: #283b30;
+  background-image:
+    linear-gradient(90deg, rgba(16, 29, 21, 0.82) 0%, rgba(16, 29, 21, 0.56) 47%, rgba(16, 29, 21, 0.08) 100%),
+    linear-gradient(0deg, rgba(16, 29, 21, 0.34), transparent 45%),
+    url('https://images.alphacoders.com/761/761908.jpg');
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+}
 
-const scrollToSection = (id) => {
-  const element = document.getElementById(id)
+.hero-content {
+  width: min(700px, 100%);
+  padding: 24px 0 40px;
+}
 
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 22px;
+  color: #e6d39e;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(3.4rem, 8vw, 6.8rem);
+  font-weight: 700;
+  letter-spacing: -0.075em;
+  line-height: 0.98;
+}
+
+.hero-description {
+  max-width: 520px;
+  margin: 24px 0 30px;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: clamp(1rem, 1.7vw, 1.18rem);
+  line-height: 1.75;
+}
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-link {
+  padding: 13px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.66);
+  border-radius: 999px;
+  color: #fff;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.hero-link-primary {
+  border-color: #e6d39e;
+  background: #e6d39e;
+  color: #284f3b;
+}
+
+.hero-link:hover,
+.hero-link:focus-visible {
+  transform: translateY(-2px);
+  background: #fff;
+  color: #284f3b;
+}
+
+.hero-link-primary:hover,
+.hero-link-primary:focus-visible {
+  border-color: #fff;
+}
+
+.hero-caption {
+  position: absolute;
+  right: max(7vw, calc((100vw - 1200px) / 2));
+  bottom: 24px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+.featured-section {
+  padding: 84px max(7vw, calc((100vw - 1200px) / 2)) 100px;
+  background: linear-gradient(180deg, #f4efe8 0%, #eef2ef 100%);
+}
+
+.section-heading {
+  margin-bottom: 30px;
+}
+
+.eyebrow.dark {
+  margin-bottom: 10px;
+  color: #65806c;
+}
+
+.section-heading h2 {
+  margin: 0;
+  color: #284f3b;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  letter-spacing: -0.055em;
+  line-height: 1.1;
+}
+
+.mountains-grid {
+  display: grid;
+  max-width: 1200px;
+  margin: 0 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.archive-cta {
+  display: flex;
+  max-width: 1200px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 36px auto 0;
+  padding: 24px 28px;
+  border: 1px solid rgba(40, 79, 59, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.archive-cta p {
+  margin: 0;
+  color: #3f5949;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.archive-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
+  border: 1px solid #284f3b;
+  border-radius: 999px;
+  background: #284f3b;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.archive-button:hover,
+.archive-button:focus-visible {
+  transform: translateY(-2px);
+  border-color: #426e50;
+  background: #426e50;
+}
+
+@media (max-width: 900px) {
+  .mountains-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-</script>
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: min(720px, max(590px, calc(100svh - 72px)));
+    align-items: flex-end;
+    padding: 60px 24px 100px;
+    background-position: 57% center;
+    background-image:
+      linear-gradient(90deg, rgba(16, 29, 21, 0.63), rgba(16, 29, 21, 0.12)),
+      linear-gradient(0deg, rgba(16, 29, 21, 0.78), rgba(16, 29, 21, 0.02) 90%),
+      url('https://images.alphacoders.com/761/761908.jpg');
+  }
+
+  .hero-content {
+    padding: 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.3rem, 15vw, 5rem);
+  }
+
+  .hero-description {
+    max-width: 440px;
+    margin: 18px 0 24px;
+    font-size: 0.98rem;
+  }
+
+  .hero-caption {
+    right: 24px;
+    bottom: 18px;
+    left: 24px;
+    font-size: 0.64rem;
+  }
+
+  .featured-section {
+    padding: 64px 18px 76px;
+  }
+
+  .archive-cta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 28px;
+    padding: 20px;
+  }
+
+  .mountains-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-link,
+  .archive-button {
+    transition: none;
+  }
+}
+</style>

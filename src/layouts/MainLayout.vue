@@ -25,20 +25,13 @@
     </q-header>
 
     <q-page-container class="page-shell">
-      <router-view v-slot="{ Component }">
-        <transition name="page-fade" mode="out-in">
-          <component :is="Component" :key="$route.fullPath" />
-        </transition>
-      </router-view>
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
 import ActionButton from '../components/ActionButton.vue'
-
-const $route = useRoute()
 </script>
 
 <style scoped>
@@ -65,23 +58,5 @@ const $route = useRoute()
 
 .page-shell {
   position: relative;
-  overflow: hidden;
-}
-
-.page-fade-enter-active,
-.page-fade-leave-active {
-  transition: opacity 0.35s ease, transform 0.35s ease;
-}
-
-.page-fade-enter-from,
-.page-fade-leave-to {
-  opacity: 0;
-  transform: translateY(12px);
-}
-
-.page-fade-enter-to,
-.page-fade-leave-from {
-  opacity: 1;
-  transform: translateY(0);
 }
 </style>
