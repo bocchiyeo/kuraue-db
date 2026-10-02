@@ -3,6 +3,12 @@
 
 import { defineConfig } from '#q-app/wrappers'
 
+const [repositoryOwner, repositoryName] = (process.env.GITHUB_REPOSITORY || '').split('/')
+const isGitHubProjectPage =
+  process.env.GITHUB_ACTIONS === 'true' &&
+  repositoryName &&
+  repositoryName !== `${repositoryOwner}.github.io`
+
 export default defineConfig((/* ctx */) => {
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
@@ -37,6 +43,7 @@ export default defineConfig((/* ctx */) => {
         node: 'node20',
       },
 
+      publicPath: isGitHubProjectPage ? `/${repositoryName}/` : '/',
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,

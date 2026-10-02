@@ -53,5 +53,23 @@ npm run format
 npm run build
 ```
 
+## Deploy to GitHub Pages
+
+The production build is a static single-page app in `dist/spa`. This repository
+includes a GitHub Actions workflow that runs lint and build checks for pull
+requests and deploys the app to GitHub Pages when changes are pushed to `master`.
+
+To enable deployment:
+
+1. In the GitHub repository, open **Settings → Pages**.
+2. Set the build and deployment source to **GitHub Actions**.
+3. Push or merge a change to `master`, or run the **Deploy to GitHub Pages**
+   workflow manually from the **Actions** tab.
+
+The workflow configures the asset base path for this repository's Pages URL.
+For other static hosts, use `npm ci` followed by `npm run build`, and publish
+the contents of `dist/spa`. Since the app uses hash-based routing, static hosts
+do not need additional route-rewrite rules.
+
 For Quasar configuration details, see
 [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
