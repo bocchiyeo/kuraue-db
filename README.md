@@ -21,10 +21,6 @@ mountain metadata list.
 - Node.js (one of the versions listed in `package.json`)
 - npm
 
-This is a JavaScript/Vue project. Its dependencies are declared in
-`package.json` and locked in `package-lock.json`; it does not use a Python
-`requirements.txt`.
-
 ## Dependencies
 
 - Runtime: Vue, Vue Router, Quasar, and Quasar Extras

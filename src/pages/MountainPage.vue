@@ -13,14 +13,7 @@
       <header class="mountain-hero" :style="{ '--mountain-image': `url('${mountain.image}')` }">
         <div class="hero-scrim" />
         <div class="hero-inner">
-          <q-breadcrumbs class="breadcrumbs" separator="/">
-            <q-breadcrumbs-el label="Home" to="/" />
-            <q-breadcrumbs-el label="Mountains" to="/mountains" />
-            <q-breadcrumbs-el :label="mountain.name" />
-          </q-breadcrumbs>
-
           <div class="hero-copy">
-            <p class="eyebrow"><span class="eyebrow-mark" /> Anime mountain archive</p>
             <h1>{{ mountain.name }}</h1>
             <p v-if="mountain.japaneseName" class="japanese-name">{{ mountain.japaneseName }}</p>
             <p class="hero-summary">{{ mountain.summary }}</p>
@@ -244,21 +237,6 @@ const renderedHtml = computed(() => renderMarkdown(mountain.value?.content || ''
   margin: 0 auto;
 }
 
-.breadcrumbs {
-  margin-bottom: clamp(68px, 15vh, 150px);
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.78rem;
-}
-
-.breadcrumbs :deep(a) {
-  color: rgba(255, 255, 255, 0.82);
-  text-decoration: none;
-}
-
-.breadcrumbs :deep(a:hover) {
-  color: #fff;
-}
-
 .hero-copy {
   max-width: 760px;
 }
@@ -269,14 +247,6 @@ const renderedHtml = computed(() => renderMarkdown(mountain.value?.content || ''
   font-weight: 700;
   letter-spacing: 0.17em;
   text-transform: uppercase;
-}
-
-.eyebrow-mark {
-  display: inline-block;
-  width: 20px;
-  height: 1px;
-  margin: 0 9px 4px 0;
-  background: #d3dfb9;
 }
 
 .hero-copy h1 {
@@ -535,11 +505,7 @@ const renderedHtml = computed(() => renderMarkdown(mountain.value?.content || ''
 @media (max-width: 860px) {
   .mountain-hero {
     min-height: 490px;
-    padding: 32px 24px 42px;
-  }
-
-  .breadcrumbs {
-    margin-bottom: clamp(60px, 12vh, 110px);
+    padding: 32px 24px 84px;
   }
 
   .hero-location {
@@ -548,7 +514,11 @@ const renderedHtml = computed(() => renderMarkdown(mountain.value?.content || ''
 
   .hero-attribution {
     right: 24px;
-    bottom: 17px;
+    bottom: 16px;
+    left: 24px;
+    align-items: flex-start;
+    gap: 5px;
+    text-align: left;
   }
 
   .profile-content {
@@ -557,6 +527,7 @@ const renderedHtml = computed(() => renderMarkdown(mountain.value?.content || ''
 
   .fact-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 16px;
   }
 
   .fact:nth-child(2) {
@@ -580,17 +551,12 @@ const renderedHtml = computed(() => renderMarkdown(mountain.value?.content || ''
 @media (max-width: 520px) {
   .mountain-hero {
     min-height: 460px;
-    padding: 26px 20px 44px;
+    padding: 26px 20px 82px;
     background-position: center;
   }
 
-  .breadcrumbs {
-    margin-bottom: 72px;
-    font-size: 0.7rem;
-  }
-
   .hero-copy h1 {
-    font-size: clamp(2.8rem, 13vw, 4rem);
+    font-size: clamp(2.4rem, 11vw, 3.5rem);
   }
 
   .hero-summary {
@@ -603,7 +569,9 @@ const renderedHtml = computed(() => renderMarkdown(mountain.value?.content || ''
 
   .hero-attribution {
     right: 20px;
+    left: 20px;
     bottom: 16px;
+    max-width: calc(100% - 40px);
   }
 
   .profile-content {
@@ -612,7 +580,6 @@ const renderedHtml = computed(() => renderMarkdown(mountain.value?.content || ''
 
   .fact-strip {
     gap: 0;
-    margin-top: -22px;
     padding: 16px 4px;
     border-radius: 16px;
   }
