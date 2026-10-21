@@ -1,7 +1,7 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
-import { defineConfig } from '#q-app/wrappers'
+import { defineConfig } from '#q-app'
 
 const [repositoryOwner, repositoryName] = (process.env.GITHUB_REPOSITORY || '').split('/')
 const isGitHubProjectPage =
